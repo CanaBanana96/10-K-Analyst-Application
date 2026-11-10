@@ -1,0 +1,52 @@
+# Two free Render web services from this one repository.
+# In the Render dashboard: New > Blueprint > pick the GitHub repository.
+# Every "sync: false" value is typed into the dashboard by you. No key belongs in this file.
+services:
+  # ---- The back end (FastAPI) ----
+  - type: web
+    name: tenk-analyst-api
+    runtime: python
+    plan: free
+    region: ohio                 # close to Neon (AWS US East 2)
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m uvicorn backend.api:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health     # answers without calling any paid service
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.8"
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: QDRANT_URL
+        sync: false
+      - key: QDRANT_API_KEY
+        sync: false
+      - key: QDRANT_COLLECTION
+        sync: false              # the same collection name as in .env (default tenk)
+      - key: NEON_DATABASE_URL
+        sync: false
+      - key: SEC_USER_AGENT
+        sync: false
+      - key: LANGSMITH_TRACING
+        value: "true"
+      - key: LANGSMITH_API_KEY
+        sync: false              # a "Tracing Only" key can send traces but cannot read them
+      - key: LANGSMITH_PROJECT
+        value: tenk-analyst
+      - key: ACCESS_CODE
+        sync: false              # the same value as on the front end
+
+  # ---- The front end (Streamlit) ----
+  - type: web
+    name: tenk-analyst-ui
+    runtime: python
+    plan: free
+    region: ohio
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m streamlit run frontend/app.py --server.port $PORT --server.address 0.0.0.0 --server.headless true
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.8"
+      - key: API_URL
+        sync: false              # the back end's address, for example https://tenk-analyst-api.onrender.com
+      - key: ACCESS_CODE
+        sync: false              # the same value as on the back end

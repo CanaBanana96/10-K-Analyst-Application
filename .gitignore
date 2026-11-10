@@ -1,0 +1,17 @@
+# Secrets: never commit these
+.env
+.env.*
+!.env.example
+
+# Python and tools
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Local caches
+.flashrank_cache/
+*.log
+
+# Personal Claude Code settings (local paths and permission choices)
+.claude/settings.local.json

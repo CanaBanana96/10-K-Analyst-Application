@@ -1,0 +1,17 @@
+﻿Third-party skills in this folder
+
+The following skills come from the LangChain Skills project:
+https://github.com/langchain-ai/langchain-skills
+Copyright (c) LangChain, Inc. Licensed under the MIT License (see LICENSE-langchain-skills.txt).
+Version used: commit 126c384d8552dcb476b226c244172186cc3f4328 2026-10-26
+
+Included without changes:
+- langgraph-fundamentals
+- langgraph-persistence
+- langchain-fundamentals
+- langchain-dependencies
+
+Not included: langchain-rag (it uses FAISS, Chroma, and OpenAI embeddings; this class uses Qdrant and OpenRouter),
+the Deep Agents, swarm, CLI, and TypeScript skills.
+
+The other skills in this folder were written for this class.
